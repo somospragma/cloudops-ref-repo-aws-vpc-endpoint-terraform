@@ -1,0 +1,70 @@
+###############################################################
+# Variables Globales
+###############################################################
+#
+aws_region="us-east-1"
+
+#
+profile="profile01"
+
+#
+environment = "dev"
+
+#
+client = "cliente01"
+
+#
+project = "proyecto01"
+
+#
+common_tags = {
+  environment   = "dev"
+  project-name  = "proyecto01"
+  cost-center   = "xxx"
+  owner         = "xxx"
+  area          = "xxx"
+  provisioned   = "xxx"
+  datatype      = "xxx"
+}
+
+###############################################################
+# Variables Definicion VPC Endpoint
+###############################################################
+
+endpoint_config =  [
+    # S3 Endpoint (Gateway type)
+    {
+      vpc_id              = "vpc-xxx"
+      service_name        = "com.amazonaws.us-east-1.s3"
+      vpc_endpoint_type   = "Gateway"
+      private_dns_enabled = false
+      security_group_ids  = []  
+      subnet_ids          = []  
+      route_table_ids     = ["rtb-xxxxx", "rtb-xxxxx"]
+      application         = "s3"
+    },
+    
+    # EC2 Endpoint (Interface type)
+    {
+      vpc_id              = "vpc-xxx"
+      service_name        = "com.amazonaws.us-east-1.ec2"
+      vpc_endpoint_type   = "Interface"
+      private_dns_enabled = true
+      security_group_ids  = ["sg-xx"]
+      subnet_ids          = ["subnet-xx", "subnet-xx"]
+      route_table_ids     = []  
+      application         = "ec2"
+    },
+    
+    # DynamoDB Endpoint (Gateway type)
+    {
+      vpc_id              = "vpc-0372e516d05182495"
+      service_name        = "com.amazonaws.us-east-1.dynamodb"
+      vpc_endpoint_type   = "Gateway"
+      private_dns_enabled = false
+      security_group_ids  = []  
+      subnet_ids          = []  
+      route_table_ids     = ["rtb-xxxx", "rtb-xxxx"]
+      application         = "dynamodb"
+    }
+  ]
