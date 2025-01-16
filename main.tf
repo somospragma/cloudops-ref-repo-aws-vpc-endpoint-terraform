@@ -4,7 +4,11 @@
 
 resource "aws_vpc_endpoint" "endpoint" {
   provider = aws.project
-  count = length(var.endpoint_config) > 0 ? length(var.endpoint_config) : 0
+  #count = length(var.endpoint_config) > 0 ? length(var.endpoint_config) : 0
+  count = length(var.endpoint_config) > 0 ? length([
+    for endpoint in var.endpoint_config : endpoint
+    if lookup(endpoint, "enabled", true) == true
+  ]) : 0  
 
   vpc_id              = var.endpoint_config[count.index].vpc_id
   service_name        = var.endpoint_config[count.index].service_name
