@@ -7,7 +7,7 @@ resource "aws_vpc_endpoint" "endpoint" {
   #count = length(var.endpoint_config) > 0 ? length(var.endpoint_config) : 0
   count = length([
     for endpoint in var.endpoint_config : endpoint
-    if lookup(endpoint, "enabled", true) == true  # Cambiar de enabled a enable
+    if lookup(endpoint, "enable", true) == true  # Cambiar de enabled a enable
   ])
 
   vpc_id              = var.endpoint_config[count.index].vpc_id
