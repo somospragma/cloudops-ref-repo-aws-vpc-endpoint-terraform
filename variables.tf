@@ -1,5 +1,6 @@
 variable "endpoint_config" {
   type = list(object({
+    enabled = optional(bool, true)
     vpc_id = string
     service_name = string
     vpc_endpoint_type = string
