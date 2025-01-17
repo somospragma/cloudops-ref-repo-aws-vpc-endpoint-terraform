@@ -80,24 +80,24 @@ module "vpc" {
     aws.project = aws.project
   }
 
-# Common configuration 
-profile     = "profile01"
-aws_region  = "us-east-1"
-environment = "dev"
-client      = "cliente01"
-project     = "proyecto01"
-common_tags = {
-  environment   = "dev"
-  project-name  = "proyecto01"
-  cost-center   = "xxx"
-  owner         = "xxx"
-  area          = "xxx"
-  provisioned   = "xxx"
-  datatype      = "xxx"
-}
+  # Common configuration 
+  profile     = "profile01"
+  aws_region  = "us-east-1"
+  environment = "dev"
+  client      = "cliente01"
+  project     = "proyecto01"
+  common_tags = {
+    environment   = "dev"
+    project-name  = "proyecto01"
+    cost-center   = "xxx"
+    owner         = "xxx"
+    area          = "xxx"
+    provisioned   = "xxx"
+    datatype      = "xxx"
+  }
 
-# VPC Endpoint configuration
-endpoint_config =  [
+  # VPC Endpoint configuration
+  endpoint_config =  [
     # DynamoDB Endpoint (Gateway type)
     {
       vpc_id              = "vpc-xxx"
