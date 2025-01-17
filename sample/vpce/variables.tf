@@ -1,44 +1,41 @@
-##################################################
-# Variable Globales
-##################################################
-#
-variable "service" {
-  type = string
-}
+###########################################
+########## Common variables ###############
+###########################################
 
-#
-variable "client" {
-  type = string
-}
-
-#
-variable "environment" {
-  type = string
-}
-
-#
-variable "aws_region" {
-  type = string
-}
-
-#
 variable "profile" {
   type = string
+  description = "Profile name containing the access credentials to deploy the infrastructure on AWS"
 }
 
-#
 variable "common_tags" {
     type = map(string)
-    description = "Tags comunes aplicadas a los recursos"
+    description = "Common tags to be applied to the resources"
 }
 
-#
+variable "aws_region" {
+  type = string
+  description = "AWS region where resources will be deployed"
+}
+
+variable "environment" {
+  type = string
+  description = "Environment where resources will be deployed"
+}
+
+variable "client" {
+  type = string
+  description = "Client name"
+}
+
 variable "project" {
   type = string  
+    description = "Project name"
 }
-##################################################
-# Variable Module VPN Endpoint
-##################################################
+
+###########################################
+####### VPC Endpoint variables ############
+###########################################
+
 variable "endpoint_config" {
   type = list(object({
     vpc_id = string
@@ -50,60 +47,14 @@ variable "endpoint_config" {
     route_table_ids = list(string)
     application = string
   }))
-}
-
-
-##################################################
-# Variable Module VPC
-##################################################
-
-variable "cidr_block" {
-  type = string
-}
-
-variable "instance_tenancy" {
-  type = string
-}
-
-variable "enable_dns_hostnames" {
-  type = bool
-}
-
-variable "enable_dns_support" {
-  type = bool
-}
-
-variable "flow_log_retention_in_days" {
-  type = number
-}
-
-variable "create_igw" {
-  type = bool
-}
-
-variable "create_nat" {
-  type = bool
-}
-
-variable "subnet_config" {
-  type = map(object({
-    custom_routes = list(object({
-      destination_cidr_block    = string
-      carrier_gateway_id        = optional(string)
-      core_network_arn          = optional(string)
-      egress_only_gateway_id    = optional(string)
-      nat_gateway_id            = optional(string)
-      local_gateway_id          = optional(string)
-      network_interface_id      = optional(string)
-      transit_gateway_id        = optional(string)
-      vpc_endpoint_id           = optional(string)
-      vpc_peering_connection_id = optional(string)
-    }))
-    public = bool
-    include_nat = optional(bool, false)
-    subnets = list(object({
-      cidr_block        = string
-      availability_zone = string
-    }))
-  }))
+  description = <<EOF
+    - vpc_id: (string) The ID of the VPC in which the endpoint will be used.
+    - service_name: (string) The service name. For AWS services the service name is usually in the form com.amazonaws.<region>.<service>
+    - vpc_endpoint_type: (optional, string) The VPC endpoint type, Gateway, GatewayLoadBalancer, or Interface. Defaults to Gateway.
+    - private_dns_enabled: (optional, bool) AWS services and AWS Marketplace partner services only. Whether or not to associate a private hosted zone with the specified VPC. Applicable for endpoints of type Interface. Most users will want this enabled to allow services within the VPC to automatically use the endpoint. Defaults to false.
+    - security_group_ids: (optional, list(string)) The ID of one or more security groups to associate with the network interface. Applicable for endpoints of type Interface. If no security groups are specified, the VPC's default security group is associated with the endpoint.
+    - subnet_ids: (optional, list(string)) The ID of one or more subnets in which to create a network interface for the endpoint. Applicable for endpoints of type GatewayLoadBalancer and Interface. Interface type endpoints cannot function without being assigned to a subnet.
+    - route_table_ids: (optional, list(string)) One or more route table IDs. Applicable for endpoints of type Gateway.
+    - application: (string) Application name in order to name vpc-endpoint
+  EOF
 }
