@@ -5,7 +5,7 @@ metadata:
   tags: ['cloudops', 'aws', 'networking', 'terraform', 'vpc']
   description: Crear VPC endpoints.
   annotations:
-    backstage.io/managed-by-location: https://github.com/somospragma/cloudops-ref-repo-aws-vpc-endpoint-terraform/blob/feature/vpce-module-init/catalog.info.yml
+    backstage.io/managed-by-location: https://github.com/somospragma/cloudops-ref-repo-aws-vpc-endpoint-terraform/blob/main/catalog.info.yml
     backstage.io/techdocs-ref: dir:.
 spec:
   type: IaC
