@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: cloudops-ref-repo-aws-vpc-endpoint-terraform
-  tags: ['cloudops', 'aws', 'networking', 'terraform', 'vpc']
+  tags: ['cloudops', 'aws', 'networking', 'terraform', 'vpc-endpoint']
   description: Crear VPC endpoints.
   annotations:
     backstage.io/managed-by-location: https://github.com/somospragma/cloudops-ref-repo-aws-vpc-endpoint-terraform/blob/main/catalog.info.yml
