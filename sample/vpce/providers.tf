@@ -3,12 +3,12 @@
 ###########################################
 
 provider "aws" {
-  alias   = "alias01"                                            #Write alias manually
+  alias   = "principal"
   region  = var.aws_region
-  profile = var.profile                                          #Write profile manually (on demand)
+  profile = var.profile
 
   assume_role {
-    role_arn = "arn:aws:iam::ACCOUNT_NUMBER:role/ROLE_NAME"      #Write account number and role name manually (on demand)
+    role_arn = "arn:aws:iam::ACCOUNT_NUMBER:role/ROLE_NAME"  # Replace with actual values
   }
   
   default_tags {
@@ -16,18 +16,17 @@ provider "aws" {
   }
 }
 
-
 ###########################################
 #Version definition - Terraform - Providers
 ###########################################
 
 terraform {
-  required_version = ">= 0.13.1"
+  required_version = ">= 1.0"
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">=4.31.0"
+      version = ">= 4.31.0"
     }
   }
 }

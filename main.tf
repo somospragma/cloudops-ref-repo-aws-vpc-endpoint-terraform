@@ -2,22 +2,34 @@
 ######## VPC Endpoint Resources ###########
 ###########################################
 
-resource "aws_vpc_endpoint" "endpoint" {
-  provider = aws.project
-  count = length([
-    for endpoint in var.endpoint_config : endpoint
-    if lookup(endpoint, "enable", true) == true
-  ])
+# PC-IAC-010: For_Each obligatorio para gestión granular
+# PC-IAC-020: Hardenizado de seguridad aplicado
 
-  vpc_id              = var.endpoint_config[count.index].vpc_id
-  service_name        = var.endpoint_config[count.index].service_name
-  vpc_endpoint_type   = var.endpoint_config[count.index].vpc_endpoint_type
-  private_dns_enabled = var.endpoint_config[count.index].private_dns_enabled
-  security_group_ids  = var.endpoint_config[count.index].security_group_ids
-  subnet_ids          = var.endpoint_config[count.index].subnet_ids
-  route_table_ids     = var.endpoint_config[count.index].route_table_ids
+resource "aws_vpc_endpoint" "this" {
+  provider = aws.project
+  
+  for_each = var.vpc_endpoints
+
+  vpc_id              = each.value.vpc_id
+  service_name        = each.value.service_name
+  vpc_endpoint_type   = each.value.vpc_endpoint_type
+  private_dns_enabled = each.value.private_dns_enabled
+  
+  # Aplicar security groups solo para Interface endpoints
+  security_group_ids = each.value.vpc_endpoint_type == "Interface" ? each.value.security_group_ids : null
+  
+  # Aplicar subnets solo para Interface y GatewayLoadBalancer endpoints
+  subnet_ids = contains(["Interface", "GatewayLoadBalancer"], each.value.vpc_endpoint_type) ? each.value.subnet_ids : null
+  
+  # Aplicar route tables solo para Gateway endpoints
+  route_table_ids = each.value.vpc_endpoint_type == "Gateway" ? each.value.route_table_ids : null
 
   tags = merge(
-    { Name = "${join("-", tolist([var.client, var.project , var.environment, "vpce", var.endpoint_config[count.index].application]))}" }
+    local.common_tags,
+    {
+      Name         = local.vpc_endpoint_names[each.key]
+      EndpointType = each.value.vpc_endpoint_type
+      ServiceName  = each.value.service_name
+    }
   )
 }
