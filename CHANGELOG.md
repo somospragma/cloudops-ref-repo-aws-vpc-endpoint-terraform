@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2024-12-29
+
+### 📚 Documentación
+- **IAM Permissions**: Agregada documentación completa de permisos IAM requeridos
+  - Nuevo directorio `iam-permissions/` con README detallado
+  - Política IAM mínima en formato JSON (`vpc-endpoints-deployment-policy.json`)
+  - Guía de troubleshooting y mejores prácticas
+- **README**: Actualizado con sección de permisos IAM
+
+### 🔧 Mejoras
+- Sin cambios en funcionalidad del módulo
+- Mejora en documentación para facilitar adopción
+
 ## [1.0.0] - 2024-12-29
 
 ### � First NOfficial Release

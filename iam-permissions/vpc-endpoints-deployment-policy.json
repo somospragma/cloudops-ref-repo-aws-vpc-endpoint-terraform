@@ -1,0 +1,52 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "VPCEndpointManagement",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:CreateVpcEndpoint",
+        "ec2:DeleteVpcEndpoints",
+        "ec2:DescribeVpcEndpoints",
+        "ec2:ModifyVpcEndpoint",
+        "ec2:DescribeVpcEndpointServices",
+        "ec2:DescribePrefixLists",
+        "ec2:DescribeVpcEndpointConnections",
+        "ec2:DescribeVpcEndpointServiceConfigurations"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "NetworkInterfaceManagement",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:CreateNetworkInterface",
+        "ec2:DeleteNetworkInterface",
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:ModifyNetworkInterfaceAttribute"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DescribeResources",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeVpcs",
+        "ec2:DescribeSubnets",
+        "ec2:DescribeSecurityGroups",
+        "ec2:DescribeRouteTables"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "TagManagement",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:CreateTags",
+        "ec2:DeleteTags",
+        "ec2:DescribeTags"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
