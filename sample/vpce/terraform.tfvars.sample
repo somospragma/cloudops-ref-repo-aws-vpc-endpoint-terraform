@@ -1,0 +1,105 @@
+###########################################
+########## Common variables ###############
+###########################################
+
+profile     = "profile01"
+aws_region  = "us-east-1"
+environment = "dev"
+client      = "cliente01"
+project     = "proyecto01"
+common_tags = {
+  environment   = "dev"
+  project-name  = "proyecto01"
+  cost-center   = "xxx"
+  owner         = "xxx"
+  area          = "xxx"
+  provisioned   = "terraform"
+  module        = "cloudops-ref-repo-aws-vpc-endpoint-terraform"
+}
+
+###########################################
+######## VPC Endpoint variables ###########
+###########################################
+
+# PC-IAC-026: Configuración declarativa sin IDs hardcodeados
+# Los IDs vacíos se llenarán automáticamente desde data sources en locals.tf
+
+vpc_endpoints = {
+  # S3 Endpoint (Gateway type) - Para acceso a S3 sin internet
+  "s3" = {
+    vpc_id              = ""  # Se llenará desde data.aws_vpc.selected
+    service_name        = "com.amazonaws.us-east-1.s3"
+    vpc_endpoint_type   = "Gateway"
+    private_dns_enabled = false
+    route_table_ids     = []  # Se llenarán desde data.aws_route_tables.private
+  }
+  
+  # DynamoDB Endpoint (Gateway type) - Para acceso a DynamoDB sin internet
+  "dynamodb" = {
+    vpc_id              = ""
+    service_name        = "com.amazonaws.us-east-1.dynamodb"
+    vpc_endpoint_type   = "Gateway"
+    private_dns_enabled = false
+    route_table_ids     = []
+  }
+  
+  # EKS Endpoint (Interface type) - Para EKS API
+  "eks" = {
+    vpc_id              = ""
+    service_name        = "com.amazonaws.us-east-1.eks"
+    vpc_endpoint_type   = "Interface"
+    private_dns_enabled = true
+    security_group_ids  = []  # Se llenará desde data.aws_security_group.vpce
+    subnet_ids          = []  # Se llenarán desde data.aws_subnets.private
+  }
+  
+  # ECR API Endpoint (Interface type) - Para ECR API
+  "ecr-api" = {
+    vpc_id              = ""
+    service_name        = "com.amazonaws.us-east-1.ecr.api"
+    vpc_endpoint_type   = "Interface"
+    private_dns_enabled = true
+    security_group_ids  = []
+    subnet_ids          = []
+  }
+  
+  # ECR DKR Endpoint (Interface type) - Para Docker registry
+  "ecr-dkr" = {
+    vpc_id              = ""
+    service_name        = "com.amazonaws.us-east-1.ecr.dkr"
+    vpc_endpoint_type   = "Interface"
+    private_dns_enabled = true
+    security_group_ids  = []
+    subnet_ids          = []
+  }
+  
+  # EC2 Endpoint (Interface type) - Para EC2 API
+  "ec2" = {
+    vpc_id              = ""
+    service_name        = "com.amazonaws.us-east-1.ec2"
+    vpc_endpoint_type   = "Interface"
+    private_dns_enabled = true
+    security_group_ids  = []
+    subnet_ids          = []
+  }
+  
+  # STS Endpoint (Interface type) - Para AWS STS
+  "sts" = {
+    vpc_id              = ""
+    service_name        = "com.amazonaws.us-east-1.sts"
+    vpc_endpoint_type   = "Interface"
+    private_dns_enabled = true
+    security_group_ids  = []
+    subnet_ids          = []
+  }
+  
+  # CloudWatch Logs Endpoint (Interface type) - Para logging
+  "logs" = {
+    vpc_id              = ""
+    service_name        = "com.amazonaws.us-east-1.logs"
+    vpc_endpoint_type   = "Interface"
+    private_dns_enabled = true
+    security_group_ids  = []
+    subnet_ids          = []
+  }
+}
