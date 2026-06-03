@@ -7,8 +7,8 @@ variable "environment" {
   description = "Environment where resources will be deployed"
   
   validation {
-    condition     = contains(["dev", "qa", "uat", "prod", "sandbox"], var.environment)
-    error_message = "Environment must be one of: dev, qa, uat, prod, sandbox"
+    condition     = contains(["dev", "qa", "uat", "prod", "sandbox", "poc"], var.environment)
+    error_message = "Environment must be one of: dev, qa, uat, prod, sandbox, poc"
   }
 }
 
